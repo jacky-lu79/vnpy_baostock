@@ -78,7 +78,7 @@ class BaoStockDatafeed(BaseDatafeed):
                 start_date=start,
                 end_date=end,
                 frequency=bs_interval,
-                adjustflag="3",
+                adjustflag="2",
             )
         except Exception as e:
             return []
