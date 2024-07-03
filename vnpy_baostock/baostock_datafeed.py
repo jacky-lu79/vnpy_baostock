@@ -43,18 +43,19 @@ class BaoStockDatafeed(BaseDatafeed):
         if self.inited:
             return True
 
-        bs.login()
         self.inited = True
 
         return True
 
     def __delete__(self):
-        bs.logout()
+        pass
 
     def query_bar_history(self, req: HistoryRequest) -> Optional[List[BarData]]:
         """查询k线数据"""
         if not self.inited:
             self.init()
+
+        bs.login()
 
         symbol = req.symbol
         exchange = req.exchange
@@ -105,6 +106,8 @@ class BaoStockDatafeed(BaseDatafeed):
                 gateway_name="BS",
             )
             data.append(bar)
+
+        bs.logout()
 
         return data
 
