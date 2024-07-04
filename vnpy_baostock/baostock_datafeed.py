@@ -87,6 +87,11 @@ class BaoStockDatafeed(BaseDatafeed):
 
         while (rs.error_code == "0") & rs.next():
             item = rs.get_row_data()
+
+            # skip bars with no trading(open == high == low == close)
+            if item[2] == item[3] == item[4] == item[5]:
+                continue
+
             str_format = "%Y-%m-%d"
             if interval in (Interval.MINUTE, Interval.HOUR):
                 str_format = "%Y%m%d%H%M%S%f"
